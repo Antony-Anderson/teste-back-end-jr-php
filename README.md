@@ -1,103 +1,61 @@
-# Descrição do Teste
+# Instalações
 
-Crie uma aplicação PHP que gerencie um sistema de consultas médicas. A aplicação deve permitir criar, ler, atualizar e deletar registros de beneficiários, médicos, hospitais e consultas.
-Este teste é focado exclusivamente na implementação do backend da aplicação, portanto, não é necessário criar interfaces gráficas ou telas.
+É necessário ter instalado o php 8.2, symfony 7.1.3, banco de dados (mysql, postgress, etc..) e postman ou insomnia para testar as rotas. 
 
-## Entidades
+# Passo a passo
 
-- **Beneficiário**: id, nome, email, data_nascimento
-- **Médico**: id, nome, especialidade, hospital
-- **Hospital**: id, nome, endereco
-- **Consulta**: id, data, status, beneficiario, medico, hospital
+- **Passo 1**: git clone https://github.com/Antony-Anderson/teste-back-end-jr-php.git
+- **Passo 2**: cd .\teste-back-end-jr-php\
+- **Passo 3**: cd .\app\ 
+- **Passo 4**: Configuração do Banco de Dados, adicione as configurações do banco de dados no arquivo `.env` ou crie um arquivo `.env.local`, é necessário alterar para suas configurações, mas aqui está um exemplo:
 
-## Requisitos
+```env
+DATABASE_URL="postgresql://postgres:root@127.0.0.1:5432/atendimento?serverVersion=12.19 (Debian 12.19-1.pgdg120+1)&charset=utf8" 
+```
+- **Passo 5**: composer install
+- **Passo 6**: symfony server:start
 
-CRUD para Beneficiário, Médico, Hospital, Consulta:
+# Rotas
 
-- **Criação**
-  - Método: POST
-- **Listagem**
-  - Método: GET
-- **Atualizar**
-  - Método: PUT
-- **Deletar**
-  - Método: DELETE
+No postman ou insomnia poderá ser testado as seguintes rotas:
 
-## Regras
+#### Observação:
+Onde tiver {id} significa que tem que passar o número do id do determinado exemplo
 
-- **Beneficiário Data nascimento**: Não deverá ser permitido cadastrar beneficiários com idade menor que 18 anos.
-- **Associação de Médico ao Hospital**: Cada médico deve estar associado a um hospital. A aplicação deve garantir que, ao criar ou atualizar um médico, ele seja relacionado a um hospital existente.
-- **Status Consulta**: Após concluída a consulta, ela não poderá ser alterada/excluída.
+- **Prefixo**: http://127.0.0.1:8000
 
-## Requisitos obrigatórios
+### Beneficiário
 
-- Criar a aplicação no padrão MVC;
-- Utilizar `symfony/routing` para as rotas;
-- Utilizar Doctrine ORM;
-- Banco de dados MySQL;
+- **GET**: `/beneficiario`
+- **POST** (store): `/beneficiario/store`
+- **PUT** (update): `/beneficiario/update/{id}`
+- **DELETE** (destroy): `/beneficiario/destroy/{id}`
 
-## Instruções para entrega
+Campos:  nome, email, data_nascimento
 
-- Seu código deve estar disponível no GitHub para acesso público.
-- Crie um arquivo `README.md` detalhando como configurar, executar e testar a aplicação.
-- Faça um fork deste repositório para iniciar o desenvolvimento.
+### Hospital
 
----
+- **GET**: `/hospital`
+- **POST** (store): `/hospital/store`
+- **PUT** (update): `/hospital/update/{id}`
+- **DELETE** (destroy): `/hospital/destroy/{id}`
 
-# Responsabilidades da Vaga
+Campos:  nome, endereco
 
-## Desenvolvimento de Aplicações Web
+### Médico
 
-- Criar e manter aplicações web utilizando o framework Symfony, seguindo o padrão MVC.
-- Implementar funcionalidades de CRUD para diferentes entidades do sistema.
+- **GET**: `/medico`
+- **POST** (store): `/medico/store`
+- **PUT** (update): `/medico/update/{id}`
+- **DELETE** (destroy): `/medico/destroy/{id}`
 
-## Gerenciamento de Banco de Dados
+Campos:  nome, hospital_id
 
-- Utilizar Doctrine ORM para manipulação e gerenciamento do banco de dados.
-- Criar e manter estruturas de banco de dados no MySQL.
+### Consulta
 
-## Implementação de Rotas
+- **GET**: `/consulta`
+- **POST** (store): `/consulta/store`
+- **PUT** (update): `/consulta/update/{id}`
+- **DELETE** (destroy): `/consulta/destroy/{id}`
 
-- Configurar e gerenciar rotas utilizando o componente `symfony/routing`.
-
-## Validação e Regras de Negócio
-
-- Implementar regras de validação e lógica de negócios.
-
-## Documentação e Testes
-
-- Criar documentação detalhada para configuração, execução e testes da aplicação.
-- Garantir que o código seja bem documentado e testado antes de ser submetido.
-
----
-
-# Requisitos Desejados da Vaga
-
-## Habilidades Técnicas
-
-- Experiência com desenvolvimento web utilizando PHP e Symfony.
-- Conhecimento em arquitetura MVC e padrões de desenvolvimento de software.
-- Familiaridade com Doctrine ORM e manipulação de bancos de dados relacionais, especificamente MySQL.
-- Conhecimento em configuração e gerenciamento de rotas com `symfony/routing`.
-- Experiência em manipulação e upload de arquivos, incluindo validação e tratamento de tipos de arquivo.
-
-## Regras de Negócio e Validação
-
-- Capacidade de implementar regras de negócios e validações complexas.
-- Experiência com validação de dados de entrada e lógica de aplicação.
-
-## Controle de Versão e Colaboração
-
-- Experiência com sistemas de controle de versão, preferencialmente Git.
-- Capacidade de trabalhar de forma colaborativa e comunicativa dentro de um ambiente de equipe.
-
-## Documentação e Boas Práticas
-
-- Habilidade em criar documentação clara e detalhada.
-- Adesão a boas práticas de codificação, incluindo comentários no código e escrita de testes.
-
-## Outros Requisitos
-
-- Capacidade de resolver problemas de forma eficaz e eficiente.
-- Boa comunicação escrita e verbal.
-- Proatividade e vontade de aprender novas tecnologias e métodos de trabalho.
+Campos:  data, status, beneficiario_id, medico_id, hospital_id
